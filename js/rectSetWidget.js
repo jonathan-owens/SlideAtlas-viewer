@@ -24,7 +24,7 @@
 
     // Add metadata to be stored for a given rectangle
     this.Metadata = [];
-
+    console.log('Making RectSet...');
     // For now, one can be active.  Highlight one
     this.ActiveIndex = -1;
   }
@@ -62,13 +62,13 @@
     }
   };
 
-  RectSet.prototype.SetMetadata = function (idx, metadataObj) {
-    this.Metadata[idx] = metadataObj;
-  };
-
-  RectSet.prototype.GetMetadata = function (idx) {
-    return this.Metadata[idx];
-  };
+  // RectSet.prototype.SetMetadata = function (idx, metadataObj) {
+  //   this.Metadata[idx] = metadataObj;
+  // };
+  //
+  // RectSet.prototype.GetMetadata = function (idx) {
+  //   return this.Metadata[idx];
+  // };
 
   // Helper for ground truth.
   RectSet.prototype.CopyRectangle = function (source, inIdx, outIdx) {
@@ -83,7 +83,7 @@
     this.Heights[outIdx] = source.Heights[inIdx];
     this.Labels[outIdx] = source.Labels[inIdx];
     this.Confidences[outIdx] = source.Confidences[inIdx];
-    this.Metadata[outIdx] = source.Metadata[inIdx];
+    // this.Metadata[outIdx] = source.Metadata[inIdx];
   };
 
   RectSet.prototype.AddRectangle = function (center, width, height) {
@@ -95,7 +95,7 @@
     this.Labels[outIdx] = '';
     this.Confidences[outIdx] = 1.0;
     // Default Metadata is empty
-    this.Metadata[outIdx] = {};
+    // this.Metadata[outIdx] = {};
     return this.Widths.length - 1;
   };
 
@@ -109,7 +109,7 @@
     this.Heights.splice(index, 1);
     this.Labels.splice(index, 1);
     this.Confidences.splice(index, 1);
-    this.Metadata.splice(index, 1);
+    // this.Metadata.splice(index, 1);
     if (this.ActiveIndex === index) {
       this.ActiveIndex = -1;
     }
@@ -303,11 +303,11 @@
     var newConfidences = new Array(this.Confidences.length);
     var newCenters = new Array(this.Centers.length);
     var newLabels = new Array(this.Centers.length);
-    var newMetadata = new Array(this.Metadata.length);
+    // var newMetadata = new Array(this.Metadata.length);
     for (i = 0; i < newConfidences.length; ++i) {
       var i2 = sortable[i].idx;
       newLabels[i] = this.Labels[i2];
-      newMetadata[i] = this.Metadata[i2];
+      // newMetadata[i] = this.Metadata[i2];
       newConfidences[i] = this.Confidences[i2];
       i2 = i2 * 2;
       newCenters[2 * i] = this.Centers[i2];
@@ -316,7 +316,7 @@
     this.Centers = newCenters;
     this.Confidences = newConfidences;
     this.Labels = newLabels;
-    this.Metadata = newMetadata;
+    // this.Metadata = newMetadata;
   };
 
   // Threshold above is the only option for now.
@@ -345,7 +345,7 @@
     obj.widths = new Array(num);
     obj.heights = new Array(num);
     obj.labels = new Array(num);
-    obj.metadata = new Array(num);
+    // obj.metadata = new Array(num);
     obj.centers = new Array(num * 2);
     for (var i = 0; i < num; ++i) {
       obj.widths[i] = this.Shape.Widths[i];
@@ -354,7 +354,7 @@
       obj.centers[i] = this.Shape.Centers[i];
       obj.centers[i + num] = this.Shape.Centers[i + num];
       obj.labels[i] = this.Shape.Labels[i];
-      obj.metadata[i] = this.Shape.Metadata[i];
+      // obj.metadata[i] = this.Shape.Metadata[i];
     }
     return obj;
   };
@@ -374,7 +374,7 @@
     this.Shape.Widths = new Array(num);
     this.Shape.Heights = new Array(num);
     this.Shape.Centers = new Array(num * 2);
-    this.Shape.Metadata = new Array(num);
+    // this.Shape.Metadata = new Array(num);
     for (var i = 0; i < num; ++i) {
       this.Shape.Widths[i] = parseFloat(obj.widths[i]);
       this.Shape.Heights[i] = parseFloat(obj.heights[i]);
@@ -384,11 +384,11 @@
       } else {
         this.Shape.Labels[i] = '';
       }
-      if (obj.metadata) {
-        this.Shape.Metadata[i] = obj.metadata[i];
-      } else {
-        this.Shape.Metadata[i] = {};
-      }
+      // if (obj.metadata) {
+      //   this.Shape.Metadata[i] = obj.metadata[i];
+      // } else {
+      //   this.Shape.Metadata[i] = {};
+      // }
       this.Shape.Centers[i] = parseFloat(obj.centers[i]);
       this.Shape.Centers[i + num] = parseFloat(obj.centers[i + num]);
     }
