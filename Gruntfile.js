@@ -120,6 +120,20 @@ module.exports = function (grunt) {
       images: {
         src: 'img/**',
         dest: 'dist/'
+      },
+      large_image: {
+        files: [{
+            expand: true,
+            cwd: 'dist/',
+            src: '**',
+            dest: '/girder/clients/web/static/built/plugins/large_image/extra/slideatlas/'
+        },
+            {
+              expand: true,
+            cwd: 'dist/',
+            src: '**',
+            dest: 'girder/plugins/large_image/web_client/extra/slideatlas/'
+            }]
       }
     },
     uglify: {
@@ -133,7 +147,8 @@ module.exports = function (grunt) {
         files: jsSrcFiles,
         tasks: [
           'concat:base',
-          'concat:maxBundle'
+          'concat:maxBundle',
+          'copy:large_image'
         ]
       },
       css: {
@@ -166,6 +181,7 @@ module.exports = function (grunt) {
     'uglify:base',
     'concat:minBundle',
     'concat:css',
-    'copy:images'
+    'copy:images',
+    'copy:large_image'
   ]);
 };
